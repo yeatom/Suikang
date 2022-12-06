@@ -1,10 +1,11 @@
 import styled from "styled-components/native";
 import {useEffect, useState} from "react";
 import moment from "moment";
+import QRCodeImage from 'react-native-qrcode-svg';
 
 function Clock() {
     function currentTime() {
-        return moment().format('YYYY/MM/DD hh:mm:ss')
+        return moment().format('YYYY/MM/DD HH:mm:ss')
     }
 
     const [time, setTime] = useState(currentTime())
@@ -35,11 +36,38 @@ function TopBar() {
     )
 }
 
+function Name() {
+    return <NameText>{'刘*彤'}</NameText>
+}
+
+function QRCode() {
+    return (
+        <QRCodeContainer>
+            <QRCodeMarqueeBackground>
+                <QRCodeMarqueeDiagonalLine/>
+                <QRCodeImageBackground>
+                    <QRCodeImage
+                        value={JSON.stringify({
+                            codeId: "0bb0860dd4f43acf7b3ec400391bdb04",
+                            zoning: "440100",
+                            s: "7f1eeb9333fa985850fd3b8888034faaa8974e42810ef170"
+                        })}
+                        color={'#5AB297'}
+                        size={170}
+                    />
+                </QRCodeImageBackground>
+            </QRCodeMarqueeBackground>
+        </QRCodeContainer>
+    )
+}
+
 export function Header() {
     return (
         <Background source={require('../assets/gradient-background.png')}>
             <TopBar/>
             <Clock/>
+            <Name/>
+            <QRCode/>
         </Background>
     )
 }
@@ -101,4 +129,42 @@ const ClockText = styled.Text`
   font-size: 25%;
   color: white;
   font-weight: 500;
+`
+
+const NameText = styled.TextInput`
+  color: white;
+  font-size: 22px;
+  font-weight: 500;
+  margin-top: 20px;
+  margin-bottom: 10px;
+`
+
+const QRCodeContainer = styled.ImageBackground`
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  padding: 7px;
+`
+
+const QRCodeImageBackground = styled.ImageBackground`
+  background-color: white;
+  margin: 5px;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+`
+
+const QRCodeMarqueeBackground = styled.ImageBackground`
+  background-color: #5cc4a4;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+`
+
+const QRCodeMarqueeDiagonalLine = styled.View`
+  width: 20px;
+  height: 200%;
+  background-color: black;
+  position: absolute;
+  transform: rotate(45deg);
 `

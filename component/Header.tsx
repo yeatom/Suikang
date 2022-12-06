@@ -1,4 +1,3 @@
-import {Image} from "react-native";
 import styled from "styled-components/native";
 import {useEffect, useState} from "react";
 import moment from "moment";
@@ -101,4 +100,5 @@ const ClockBackground = styled.ImageBackground`
 const ClockText = styled.Text`
   font-size: 25%;
   color: white;
+  font-weight: 500;
 `

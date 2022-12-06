@@ -1,31 +1,60 @@
 import {Image} from "react-native";
 import styled from "styled-components/native";
+import {useEffect, useState} from "react";
+import moment from "moment";
+
+function Clock() {
+    function currentTime() {
+        return moment().format('YYYY/MM/DD hh:mm:ss')
+    }
+
+    const [time, setTime] = useState(currentTime())
+
+    useEffect(() => {
+        setInterval(() => {
+            setTime(currentTime())
+        }, 1000)
+    }, [])
+
+    return (
+        <ClockBackground>
+            <ClockText>{time}</ClockText>
+        </ClockBackground>
+    )
+}
+
+function TopBar() {
+    return (
+        <TopBarContainer>
+            <TopBarBackButton source={require('../assets/back-button.png')} resizeMode={'contain'}/>
+            <TopBarText>粤康码（广州）</TopBarText>
+            <TopBarMenuBackground source={require('../assets/menu-button.png')} resizeMode={'contain'}>
+                <TopBarMenuLeftButton source={require('../assets/share-button.png')} resizeMode={'contain'}/>
+                <TopBarMenuRightButton source={require('../assets/close-button.png')} resizeMode={'contain'}/>
+            </TopBarMenuBackground>
+        </TopBarContainer>
+    )
+}
 
 export function Header() {
     return (
         <Background source={require('../assets/gradient-background.png')}>
-            <TopBar>
-                <TopBarBackButton source={require('../assets/back-button.png')} resizeMode={'contain'}/>
-                <TopBarText>粤康码（广州）</TopBarText>
-                <TopBarMenuBackground source={require('../assets/menu-button.png')} resizeMode={'contain'}>
-                    <TopBarMenuLeftButton source={require('../assets/share-button.png')} resizeMode={'contain'}/>
-                    <TopBarMenuRightButton source={require('../assets/close-button.png')} resizeMode={'contain'}/>
-                </TopBarMenuBackground>
-            </TopBar>
-            <Clock>
-
-            </Clock>
+            <TopBar/>
+            <Clock/>
         </Background>
     )
 }
 
 const Background = styled.ImageBackground`
   height: 555px;
+  flex-direction: column;
+  align-items: center;
 `
 
-const TopBar = styled.View`
+const TopBarContainer = styled.View`
   margin-top: 20px;
   height: 100px;
+  width: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -60,10 +89,16 @@ const TopBarMenuRightButton = styled.Image`
   margin-right: 15%;
 `
 
-const Clock = styled.View`
-
+const ClockBackground = styled.ImageBackground`
+  background-color: rgba(30, 30, 30, 0.15);
+  width: 70%;
+  height: 50px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
 `
 
-const ClockBackground = styled.ImageBackground`
-  
+const ClockText = styled.Text`
+  font-size: 25%;
+  color: white;
 `

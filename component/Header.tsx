@@ -3,6 +3,7 @@ import {useEffect, useRef, useState} from "react";
 import moment from "moment";
 import QRCodeImage from 'react-native-qrcode-svg';
 import {Animated, Easing} from "react-native";
+import {LinearGradient} from 'expo-linear-gradient'
 
 function Clock() {
     function currentTime() {
@@ -42,17 +43,17 @@ function Name() {
 }
 
 function QRCode() {
-    const translateAnim1 = useRef(new Animated.Value(-200)).current;
+    const translateAnim1 = useRef(new Animated.Value(-230)).current;
     const translateAnim2 = translateAnim1.interpolate({
-        inputRange: [-200, 0, 1, 200],
-        outputRange: [0, 200, -200, 0]
+        inputRange: [-230, 0, 0, 200],
+        outputRange: [0, 200, -230, 0]
     });
 
     useEffect(() => {
         Animated.loop(
             Animated.timing(translateAnim1, {
                 toValue: 200,
-                duration: 5000,
+                duration: 4000,
                 easing: Easing.linear,
                 useNativeDriver: true
             }),
@@ -62,17 +63,8 @@ function QRCode() {
     return (
         <QRCodeContainer>
             <QRCodeMarqueeBackground>
-                <QRCodeMarqueeDiagonalLine style={{
-                    transform: [
-                        {translateX: translateAnim1},
-                        {rotate: "45deg"}
-                    ]
-                }}/>
-                <QRCodeMarqueeDiagonalLine style={{
-                    transform: [{
-                        translateX: translateAnim2
-                    }, {rotate: "45deg"}]
-                }}/>
+                <QRCodeMarqueeDiagonalLine anim={translateAnim1}/>
+                <QRCodeMarqueeDiagonalLine anim={translateAnim2}/>
                 <QRCodeImageBackground>
                     <QRCodeImage
                         value={JSON.stringify({
@@ -172,6 +164,7 @@ const QRCodeContainer = styled.ImageBackground`
   justify-content: center;
   align-items: center;
   padding: 7px;
+  border-radius: 5px;
 `
 
 const QRCodeImageBackground = styled.ImageBackground`
@@ -187,11 +180,20 @@ const QRCodeMarqueeBackground = styled.ImageBackground`
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  border-radius: 5px;
 `
 
-const QRCodeMarqueeDiagonalLine = Animated.createAnimatedComponent(styled.View`
-  width: 20px;
-  height: 200%;
-  background-color: black;
-  position: absolute;
-`)
+const QRCodeMarqueeDiagonalLine = (pros: { anim: Animated.AnimatedWithChildren }) => {
+    const Gradient = Animated.createAnimatedComponent(styled(LinearGradient)`
+      width: 30%;
+      height: 200%;
+      position: absolute;
+    `)
+
+    return <Gradient
+        style={{transform: [{translateX: pros.anim}, {rotate: "45deg"}]}}
+        start={{x: 0, y: 0}} end={{x: 1, y: 0}}
+        locations={[0.1, 0.6]}
+        colors={['rgba(90,178,151,0)', '#26ffba', 'rgba(90,178,151,0)']}
+    />
+}

@@ -110,6 +110,14 @@ function BottomBar() {
     )
 }
 
+function SideBar() {
+    return (
+        <SideBarContainer>
+            <SideBarText>常见问题</SideBarText>
+        </SideBarContainer>
+    )
+}
+
 export function Header() {
     return (
         <Background source={require('../assets/gradient-background.png')}>
@@ -119,6 +127,7 @@ export function Header() {
             <QRCode/>
             <LastReportTime/>
             <BottomBar/>
+            <SideBar/>
         </Background>
     )
 }
@@ -308,4 +317,20 @@ const BottomBarTopLine = styled.View`
   top: 0;
 `
 
+const SideBarContainer = styled.View`
+  position: absolute;
+  right: 0;
+  top: 50%;
+  border-radius: 5px;
+  transform: translateX(5px);
+  background-color: rgba(255, 255, 255, 0.2);
+`
+
+const SideBarText = styled.Text`
+  margin: 10px 8px 10px 7px; 
+  width: 15px;
+  font-size: 15px;
+  color: white;
+  line-height: 22px;
+`
 

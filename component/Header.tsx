@@ -77,6 +77,15 @@ function QRCode() {
                     />
                 </QRCodeImageBackground>
             </QRCodeMarqueeBackground>
+            <QRCodeStatusContainer>
+                <QRCodeStatusText>绿码</QRCodeStatusText>
+                <QRCodeRefreshContainer>
+                    <QRCodeRefreshImage style={{tintColor: 'rgba(30, 30, 30, 0.4)'}}
+                                        source={require('../assets/refresh-button.png')}
+                                        resizeMode={'contain'}/>
+                    <QRCodeRefreshText>刷新</QRCodeRefreshText>
+                </QRCodeRefreshContainer>
+            </QRCodeStatusContainer>
         </QRCodeContainer>
     )
 }
@@ -197,3 +206,33 @@ const QRCodeMarqueeDiagonalLine = (pros: { anim: Animated.AnimatedWithChildren }
         colors={['rgba(90,178,151,0)', '#26ffba', 'rgba(90,178,151,0)']}
     />
 }
+
+const QRCodeStatusContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 3px;
+`
+
+const QRCodeStatusText = styled.Text`
+  color: #5AB297;
+  font-weight: 900;
+  font-size: 20px;
+`
+
+const QRCodeRefreshContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+`
+
+const QRCodeRefreshImage = styled.Image`
+  height: 18px;
+  width: 18px;
+  margin: 0 5px 0 7px;
+`
+
+const QRCodeRefreshText = styled.Text`
+  font-size: 20px;
+  color: rgba(30, 30, 30, 0.4);
+`

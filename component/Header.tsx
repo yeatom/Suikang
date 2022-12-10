@@ -90,6 +90,26 @@ function QRCode() {
     )
 }
 
+function LastReportTime() {
+    return (
+        <LastReportTimeContainer>
+            <LastReportTimeHintText>最新上报时间：</LastReportTimeHintText>
+            <LastReportTimeText>2022/02/12</LastReportTimeText>
+        </LastReportTimeContainer>
+    )
+}
+
+function BottomBar() {
+    return (
+        <BottomBarContainer>
+            <BottomBarText>上报健康信息</BottomBarText>
+            <BottomBarSeparateLine/>
+            <BottomBarText>健康码管理</BottomBarText>
+            <BottomBarTopLine/>
+        </BottomBarContainer>
+    )
+}
+
 export function Header() {
     return (
         <Background source={require('../assets/gradient-background.png')}>
@@ -97,6 +117,8 @@ export function Header() {
             <Clock/>
             <Name/>
             <QRCode/>
+            <LastReportTime/>
+            <BottomBar/>
         </Background>
     )
 }
@@ -236,3 +258,54 @@ const QRCodeRefreshText = styled.Text`
   font-size: 20px;
   color: rgba(30, 30, 30, 0.4);
 `
+
+const LastReportTimeContainer = styled.View`
+  margin-top: 17px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+`
+
+const LastReportTimeHintText = styled.Text`
+  font-size: 14.5px;
+  color: white;
+`
+
+const LastReportTimeText = styled.Text`
+  color: white;
+  font-size: 14.5px;
+  font-weight: 500;
+`
+
+const BottomBarContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 8%;
+  flex-direction: row;
+`
+
+const BottomBarText = styled.Text`
+  color: rgba(255, 255, 255, 0.6);
+  flex: 1;
+  text-align: center;
+  font-size: 17px;
+`
+
+const BottomBarSeparateLine = styled.View`
+  height: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  width: 1px;
+`
+
+const BottomBarTopLine = styled.View`
+  height: 0.5px;
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 90%;
+  position: absolute;
+  top: 0;
+`
+
+

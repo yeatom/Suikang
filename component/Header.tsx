@@ -30,10 +30,6 @@ function TopBar() {
         <TopBarContainer>
             <TopBarBackButton source={require('../assets/back-button.png')} resizeMode={'contain'}/>
             <TopBarText>粤康码（广州）</TopBarText>
-            <TopBarMenuBackground source={require('../assets/menu-button.png')} resizeMode={'contain'}>
-                <TopBarMenuLeftButton source={require('../assets/share-button.png')} resizeMode={'contain'}/>
-                <TopBarMenuRightButton source={require('../assets/close-button.png')} resizeMode={'contain'}/>
-            </TopBarMenuBackground>
         </TopBarContainer>
     )
 }
@@ -143,7 +139,7 @@ const TopBarContainer = styled.View`
   height: 100px;
   width: 100%;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
 `
 
@@ -154,26 +150,7 @@ const TopBarBackButton = styled.Image`
 const TopBarText = styled.Text`
   font-size: 18px;
   color: white;
-  padding-left: 60px;
-`
-
-const TopBarMenuBackground = styled.ImageBackground`
-  width: 100px;
-  height: 100%;
-  margin-right: 10px;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
-`
-
-const TopBarMenuLeftButton = styled.Image`
-  width: 20%;
-  margin-left: 15%;
-`
-
-const TopBarMenuRightButton = styled.Image`
-  width: 20%;
-  margin-right: 15%;
+  padding-left: 90px;
 `
 
 const ClockBackground = styled.ImageBackground`

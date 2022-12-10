@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 import {useEffect, useRef, useState} from "react";
 import moment from "moment";
 import QRCodeImage from 'react-native-qrcode-svg';
-import {Animated, Easing} from "react-native";
+import {Alert, Animated, Easing, TouchableWithoutFeedback, View} from "react-native";
 import {LinearGradient} from 'expo-linear-gradient'
 
 function Clock() {
@@ -39,6 +39,19 @@ function Name() {
 }
 
 function QRCode() {
+    function getRandomArbitrary(min: number, max: number) {
+        return Math.ceil(Math.random() * (max - min) + min);
+    }
+
+    const generateCode = `\n${getRandomArbitrary(1000, 9999)} ${getRandomArbitrary(1000, 9999)}\n`;
+
+    function createAlert() {
+        Alert.alert(
+            "动态验证码", generateCode,
+            [{text: "知道了", style: "cancel"},]
+        );
+    }
+
     const translateAnim1 = useRef(new Animated.Value(-230)).current;
     const translateAnim2 = translateAnim1.interpolate({
         inputRange: [-230, 0, 0, 200],
@@ -62,15 +75,19 @@ function QRCode() {
                 <QRCodeMarqueeDiagonalLine anim={translateAnim1}/>
                 <QRCodeMarqueeDiagonalLine anim={translateAnim2}/>
                 <QRCodeImageBackground>
-                    <QRCodeImage
-                        value={JSON.stringify({
-                            codeId: "0bb0860dd4f43acf7b3ec400391bdb04",
-                            zoning: "440100",
-                            s: "7f1eeb9333fa985850fd3b8888034faaa8974e42810ef170"
-                        })}
-                        color={'#5AB297'}
-                        size={170}
-                    />
+                    <TouchableWithoutFeedback onPress={createAlert}>
+                        <View>
+                            <QRCodeImage
+                                value={JSON.stringify({
+                                    codeId: "0bb0860dd4f43acf7b3ec400391bdb04",
+                                    zoning: "440100",
+                                    s: "7f1eeb9333fa985850fd3b8888034faaa8974e42810ef170"
+                                })}
+                                color={'#5AB297'}
+                                size={170}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
                 </QRCodeImageBackground>
             </QRCodeMarqueeBackground>
             <QRCodeStatusContainer>
@@ -304,7 +321,7 @@ const SideBarContainer = styled.View`
 `
 
 const SideBarText = styled.Text`
-  margin: 10px 8px 10px 7px; 
+  margin: 10px 8px 10px 7px;
   width: 15px;
   font-size: 15px;
   color: white;

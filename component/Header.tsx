@@ -210,7 +210,7 @@ const QRCodeMarqueeDiagonalLine = (pros: { anim: Animated.AnimatedWithChildren }
     return <Gradient
         style={{transform: [{translateX: pros.anim}, {rotate: "45deg"}]}}
         start={{x: 0, y: 0}} end={{x: 1, y: 0}}
-        locations={[0.1, 0.6]}
+        locations={[0.1, 0.6, 1]}
         colors={['rgba(90,178,151,0)', '#26ffba', 'rgba(90,178,151,0)']}
     />
 }

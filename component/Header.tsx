@@ -1,7 +1,8 @@
 import styled from "styled-components/native";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import moment from "moment";
 import QRCodeImage from 'react-native-qrcode-svg';
+import {Animated, Easing} from "react-native";
 
 function Clock() {
     function currentTime() {
@@ -41,10 +42,37 @@ function Name() {
 }
 
 function QRCode() {
+    const translateAnim1 = useRef(new Animated.Value(-200)).current;
+    const translateAnim2 = translateAnim1.interpolate({
+        inputRange: [-200, 0, 1, 200],
+        outputRange: [0, 200, -200, 0]
+    });
+
+    useEffect(() => {
+        Animated.loop(
+            Animated.timing(translateAnim1, {
+                toValue: 200,
+                duration: 5000,
+                easing: Easing.linear,
+                useNativeDriver: true
+            }),
+        ).start()
+    }, [])
+
     return (
         <QRCodeContainer>
             <QRCodeMarqueeBackground>
-                <QRCodeMarqueeDiagonalLine/>
+                <QRCodeMarqueeDiagonalLine style={{
+                    transform: [
+                        {translateX: translateAnim1},
+                        {rotate: "45deg"}
+                    ]
+                }}/>
+                <QRCodeMarqueeDiagonalLine style={{
+                    transform: [{
+                        translateX: translateAnim2
+                    }, {rotate: "45deg"}]
+                }}/>
                 <QRCodeImageBackground>
                     <QRCodeImage
                         value={JSON.stringify({
@@ -161,10 +189,9 @@ const QRCodeMarqueeBackground = styled.ImageBackground`
   overflow: hidden;
 `
 
-const QRCodeMarqueeDiagonalLine = styled.View`
+const QRCodeMarqueeDiagonalLine = Animated.createAnimatedComponent(styled.View`
   width: 20px;
   height: 200%;
   background-color: black;
   position: absolute;
-  transform: rotate(45deg);
-`
+`)

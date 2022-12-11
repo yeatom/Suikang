@@ -35,7 +35,10 @@ function TopBar() {
 }
 
 function Name() {
-    return <NameText>{'刘*彤'}</NameText>
+    function name() {
+        return'刘*华'
+    }
+    return <NameText>{name()}</NameText>
 }
 
 function QRCode() {

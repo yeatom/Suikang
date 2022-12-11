@@ -20,12 +20,16 @@ function retrieveDetail(): DetailProps[] {
                         fontSize: 20,
                         fontWeight: 'bold',
                         color: '#20c490'
-                    }}>阴性</Text>
+                    }}>
+                        阴性
+                    </Text>
                     <Text style={{
                         textAlign: 'center',
                         fontWeight: '300',
                         color: 'rgba(30,30,30,0.3)',
-                    }}>{moment().format('YYYY-MM-DD 07:21')}</Text>
+                    }}>
+                        {moment().format('YYYY-MM-DD 07:21')}
+                    </Text>
                     <Text style={{
                         marginTop: 20,
                         padding: 3,
@@ -35,7 +39,9 @@ function retrieveDetail(): DetailProps[] {
                         width: 85,
                         color: '#0081ff',
                         textAlign: 'center'
-                    }}>点击查看</Text>
+                    }}>
+                        点击查看
+                    </Text>
                 </View>
         },
         {

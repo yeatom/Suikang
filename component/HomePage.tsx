@@ -1,7 +1,8 @@
 import styled from "styled-components/native";
-import {ListRenderItemInfo, ScrollView, Text, View} from "react-native";
+import {ListRenderItemInfo, ScrollView, View} from "react-native";
 import {Header} from "./Header";
 import React, {ElementType} from "react";
+import DataApi, {DetailProps} from "../data/DataApi";
 
 export default function HomePage() {
     return (
@@ -24,41 +25,33 @@ function FloatingButton() {
     )
 }
 
-type DetailProps = {
-    title: string,
-    customComponent: JSX.Element,
-}
-
 function DetailList() {
+    const DATA = DataApi.retrieveDetail()
+
     function renderItem(itemData: ListRenderItemInfo<DetailProps>) {
+        const {borderColor, title, customComponent} = itemData.item;
         return (
-            <DetailFlatListItemContainer style={{
-                shadowColor: '#d70b0b',
-                shadowRadius: 5,
-            }}>
-                <DetailFlatListItemTitleText>{itemData.item.title}</DetailFlatListItemTitleText>
-                {itemData.item.customComponent}
+            <DetailFlatListItemContainer>
+                <DetailFlatListItemInnerContainer borderColor={borderColor}>
+                    <DetailFlatListItemTitleText>{title}</DetailFlatListItemTitleText>
+                    <DetailFlatListItemCustomComponentContainer>
+                        {customComponent}
+                    </DetailFlatListItemCustomComponentContainer>
+                </DetailFlatListItemInnerContainer>
             </DetailFlatListItemContainer>
         )
     }
 
-    const DATA: DetailProps[] = [
-        {
-            title: "核酸检测结果",
-            customComponent: <View/>
-        },
-        {
-            title: "疫苗接种信息",
-            customComponent: <Text style={{
-                fontSize: 20,
-                color: 'rgba(30,30,30,0.5)',
-                textAlign: 'center',
-            }}>暂无新冠疫苗接种记录</Text>
-        }
-    ]
-
     return (
-        <DetailFlatList<ElementType> horizontal={true} data={DATA} renderItem={renderItem}/>
+        <DetailFlatList<ElementType>
+            horizontal={true}
+            data={DATA} renderItem={renderItem}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+                paddingLeft: 10,
+                paddingRight: 10,
+            }}
+        />
     )
 }
 
@@ -92,12 +85,43 @@ const DetailFlatList = styled.FlatList`
   width: 100%;
 `
 
-const DetailFlatListItemContainer = styled.View`
+const DetailFlatListItemContainer = (props: { children: React.ReactNode }) =>
+    <View style={{
+        shadowColor: 'rgba(30,30,30,0.5)',
+        shadowRadius: 7,
+        shadowOffset: {width: 0, height: 0},
+        shadowOpacity: 0.1,
+        height: '72%',
+        aspectRatio: 1.25,
+        justifyContent: 'center',
+        marginTop: 10,
+        borderRadius: 7,
+        padding: 3,
+        margin: 5,
+        backgroundColor: 'white',
+    }}>
+        {props.children}
+    </View>
+
+
+const DetailFlatListItemInnerContainer = styled.View<{ borderColor?: string }>`
   height: 100%;
-  aspect-ratio: 0.7;
+  width: 100%;
+  border-radius: 7px;
+  background-color: white;
+  border-width: 0.35px;
+  border-color: ${props => props.borderColor || 'rgba(30,30,30,0.3)'};
 `
 
 const DetailFlatListItemTitleText = styled.Text`
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
+  margin: 5px;
+`
+
+const DetailFlatListItemCustomComponentContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 20px;
 `

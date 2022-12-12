@@ -173,7 +173,7 @@ const CaringModelButtonContainer = styled.View`
   align-items: center;
   flex-direction: row;
   border-width: 1px;
-  margin: 20px 12px 50px 12px;
+  margin: 20px 15px 50px 15px;
 `
 
 const CaringModelButtonImage = styled.Image`

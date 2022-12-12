@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "expo": "~47.0.8",
+    "expo-brightness": "~11.0.1",
     "expo-linear-gradient": "~12.0.1",
     "expo-status-bar": "~1.4.2",
     "moment": "^2.29.4",

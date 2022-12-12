@@ -8,7 +8,7 @@ export default function App() {
         (async () => {
             const { status } = await Brightness.requestPermissionsAsync();
             if (status === 'granted') {
-                await Brightness.setSystemBrightnessAsync(1);
+                await Brightness.setSystemBrightnessAsync(0.7);
             }
         })();
     };

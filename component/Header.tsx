@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 import {useEffect, useRef, useState} from "react";
 import moment from "moment";
 import QRCodeImage from 'react-native-qrcode-svg';
-import {Alert, Animated, Easing, TouchableWithoutFeedback, View} from "react-native";
+import {Alert, Animated, Dimensions, Easing, Image, TouchableWithoutFeedback, View} from "react-native";
 import {LinearGradient} from 'expo-linear-gradient'
 
 function Clock() {
@@ -36,8 +36,9 @@ function TopBar() {
 
 function Name() {
     function name() {
-        return'刘*华'
+        return '刘*华'
     }
+
     return <NameText>{name()}</NameText>
 }
 
@@ -134,9 +135,45 @@ function SideBar() {
     )
 }
 
+function WavyLines() {
+    const windowWidth = Dimensions.get('window').width;
+    const singleHeight = windowWidth / 6;
+    const linesNum = 4
+
+    const translateAnimBase = useRef(new Animated.Value(0)).current;
+
+    const animates: Animated.AnimatedWithChildren[] = [];
+    for (let i = 1; i <= linesNum; i++) {
+        const topHeight = 100 * (i / linesNum);
+        const translateAnim = translateAnimBase.interpolate({
+            inputRange: [0, topHeight, topHeight, 100],
+            outputRange: [0, -singleHeight * i, singleHeight * (linesNum - i), 0],
+        });
+        animates.push(translateAnim)
+    }
+
+    useEffect(() => {
+        Animated.loop(
+            Animated.timing(translateAnimBase, {
+                toValue: 100,
+                duration: 4000,
+                easing: Easing.linear,
+                useNativeDriver: true
+            }),
+        ).start()
+    }, [])
+
+    return (
+        <WavyLinesContainer>
+            {animates.map(function (animate) {return <WavyLine anim={animate}/>})}
+        </WavyLinesContainer>
+    )
+}
+
 export function Header() {
     return (
         <Background source={require('../assets/gradient-background.png')}>
+            <WavyLines/>
             <TopBar/>
             <Clock/>
             <Name/>
@@ -331,3 +368,34 @@ const SideBarText = styled.Text`
   line-height: 22px;
 `
 
+const WavyLinesContainer = styled.View`
+  position: absolute;
+  width: 100%;
+  top: 0;
+  //flex-wrap: wrap;
+  height: 32%;
+  overflow: hidden;
+  justify-content: flex-start;
+  align-items: center;
+`
+
+const WavyLine = (pros: { anim: Animated.AnimatedWithChildren }) => {
+    const Outer = Animated.createAnimatedComponent(styled.View`
+      opacity: 1;
+      width: 100%;
+      aspect-ratio: 6;
+    `)
+
+    return (
+        <Outer style={{transform: [{translateY: pros.anim}]}}>
+            <Image
+                style={{
+                    width: '100%',
+                    height: '100%',
+                }}
+                source={require('../assets/wavy-line.png')}
+                resizeMode={'contain'}
+            />
+        </Outer>
+    )
+}

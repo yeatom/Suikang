@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import moment from "moment";
 import QRCodeImage from 'react-native-qrcode-svg';
 import {Alert, Animated, Dimensions, Easing, Image, TouchableWithoutFeedback, View} from "react-native";
@@ -165,7 +165,10 @@ function WavyLines() {
 
     return (
         <WavyLinesContainer>
-            {animates.map(function (animate) {return <WavyLine anim={animate}/>})}
+            {animates.map(function (animate, index) {
+                return <WavyLine anim={animate} key={index}/>
+            })}
+            <WavyLinesMask/>
         </WavyLinesContainer>
     )
 }
@@ -399,3 +402,13 @@ const WavyLine = (pros: { anim: Animated.AnimatedWithChildren }) => {
         </Outer>
     )
 }
+
+const WavyLinesMask = () =>
+    <LinearGradient
+        style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+        }}
+        colors={['rgba(79,141,238,0.7)', '#4F8DEE']}
+    />

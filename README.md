@@ -5,5 +5,4 @@ Suikang Code/Yuekang Code.
 For practice only. Don't Do Anything Illegal.
 仅供学习使用，切勿用于非法用途。
 
-
-
+![image](https://github.com/yeatom/Suikang/blob/master/cover-image.gif)
